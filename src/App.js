@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import marked from 'marked'
+import React, { useState } from 'react'
+import { Grid, TextField, Typography } from '@material-ui/core'
+import useStyles from './styles'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+    const [markdown, setMarkdown] = useState('')
+    const classes = useStyles()
+
+    return (
+        <Grid container spacing={2} className={classes.container}>
+            <Grid item xs={6}>
+                <Typography variant='h4' style={{ marginBottom: '20px' }}>Markdown Input</Typography>
+                <TextField 
+                    multiline
+                    variant='outlined'
+                    fullWidth
+                    onChange={(e) => setMarkdown(e.target.value)}
+                    className={classes.inputTextArea}
+                />
+            </Grid>
+            <Grid item xs={6}>
+                <Typography variant='h4' style={{ marginBottom: '20px' }}>Markdown Output</Typography>
+                <div className={classes.output} dangerouslySetInnerHTML={{ __html: marked(markdown) }}></div>
+            </Grid>
+        </Grid>
+    )
 }
 
-export default App;
+export default App
